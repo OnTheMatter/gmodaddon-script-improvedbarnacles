@@ -1,0 +1,11 @@
+{
+	"title"		:	"Improved Barnacle NPCs",
+	"type"		:	"NPC",
+	"tags"		:	[ "fun","realism"],
+	"ignore"	:
+	[
+		"*.psd",
+		"*.vcproj",
+		"*.svn*"
+	]
+}
