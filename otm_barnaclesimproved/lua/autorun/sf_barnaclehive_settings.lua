@@ -16,11 +16,31 @@ function SF_BARNACLEHIVE_SETTINGS_PANEL_INIT(panel)
 
 	panel:CheckBox("Less Gibs?","sfad_barnaclehive_disablegibs");
 
+	panel:CheckBox("Fancy Death?","sfad_barnaclehive_fancydeath");
+
+	panel:ControlHelp("---- Barnacle Stats Settings ----")
+
+	panel:NumSlider("Damage Multiplier","sfad_barnaclehive_damagemultiplier",0.1,10,1);
+
+	panel:NumSlider("Health Multiplier","sfad_barnaclehive_healthmultiplier",0.1,10,1);
+
+	//panel:NumSlider("Min Size Scale","sfad_barnaclehive_minsizemultiplier",0,2,2);
+
+	//panel:NumSlider("Max Size Scale","sfad_barnaclehive_maxsizemultiplier",0,2,2);
+
+	//panel:Help("Each Barnacle will have their size scaled by a random value between the Min and Max Size Scale.");
+
+	//panel:CheckBox("Multiply Damage by size?","sfad_barnaclehive_sizemultipliesdmghp");
+
+	panel:CheckBox("Eat Players","sfad_barnaclehive_eatplayer");
+
+	panel:CheckBox("Melee Weapons Won't Instakill","sfad_barnaclehive_disablemeleeinstakill");
+
 	panel:ControlHelp("---- Barnacle Spreading Settings ----");
 
 	panel:CheckBox("Spreading Enabled?", "sfad_barnaclehive_barnaclespreadenabled");
 
-	panel:NumSlider("Barnacle Pop. Cap","sfad_barnaclehive_barnaclelimit",-1,300,0);
+	panel:NumSlider("Barnacle Pop. Cap","sfad_barnaclehive_barnaclelimit",-1,600,0);
 
 	panel:Help("Barnacle Population Cap - How many barnacles can there be at once before spreading stops? Set to -1 to have no limit.")
 
