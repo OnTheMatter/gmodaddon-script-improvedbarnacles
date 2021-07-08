@@ -13,11 +13,11 @@ if !ConVarExists("sfad_barnaclehive_maxzoffset") then
 end
 
 if !ConVarExists("sfad_barnaclehive_randomly_ignored_chance") then
-    CreateConVar("sfad_barnaclehive_randomly_ignored_chance", "0.5", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+    CreateConVar("sfad_barnaclehive_randomly_ignored_chance", "0.75", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
 end
 
 if !ConVarExists("sfad_barnaclehive_spread_chance") then
-    CreateConVar("sfad_barnaclehive_spread_chance", "0.2", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+    CreateConVar("sfad_barnaclehive_spread_chance", "0.325", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
 end
 
 if !ConVarExists("sfad_barnaclehive_social_distance") then
@@ -44,6 +44,37 @@ if !ConVarExists("sfad_barnaclehive_killcorpsetimer") then
     CreateConVar("sfad_barnaclehive_killcorpsetimer", "15", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
 end
 
+if !ConVarExists("sfad_barnaclehive_fancydeath") then
+    CreateConVar("sfad_barnaclehive_fancydeath", "1", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+end
+
+if !ConVarExists("sfad_barnaclehive_eatplayer") then
+    CreateConVar("sfad_barnaclehive_eatplayer", "1", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+end
+
+if !ConVarExists("sfad_barnaclehive_damagemultiplier") then
+    CreateConVar("sfad_barnaclehive_damagemultiplier", "1", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+end
+
+if !ConVarExists("sfad_barnaclehive_healthmultiplier") then
+    CreateConVar("sfad_barnaclehive_healthmultiplier", "1", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+end
+
+if !ConVarExists("sfad_barnaclehive_minsizemultiplier") then
+    CreateConVar("sfad_barnaclehive_minsizemultiplier", "0.9", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+end
+
+if !ConVarExists("sfad_barnaclehive_maxsizemultiplier") then
+    CreateConVar("sfad_barnaclehive_maxsizemultiplier", "1.1", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+end
+
+if !ConVarExists("sfad_barnaclehive_sizemultipliesdmghp") then
+    CreateConVar("sfad_barnaclehive_sizemultipliesdmghp", "1", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+end
+
+if !ConVarExists("sfad_barnaclehive_disablemeleeinstakill") then
+    CreateConVar("sfad_barnaclehive_disablemeleeinstakill", "1", {FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE, FCVAR_REPLICATED, FCVAR_NOTIFY})
+end
 
 if (CLIENT) then return end
 
@@ -113,18 +144,74 @@ net.Receive("sfad_barnaclehive_killcorpsetimer", function(len,ply)
 	end
 end)
 
+net.Receive("sfad_barnaclehive_fancydeath", function(len,ply)
+	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
+		RunConsoleCommand("sfad_barnaclehive_fancydeath", net.ReadInt())
+	end
+end)
+
+net.Receive("sfad_barnaclehive_eatplayer", function(len,ply)
+	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
+		RunConsoleCommand("sfad_barnaclehive_eatplayer", net.ReadInt())
+	end
+end)
+
+net.Receive("sfad_barnaclehive_damagemultiplier", function(len,ply)
+	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
+		RunConsoleCommand("sfad_barnaclehive_damagemultiplier", net.ReadFloat())
+	end
+end)
+
+net.Receive("sfad_barnaclehive_healthmultiplier", function(len,ply)
+	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
+		RunConsoleCommand("sfad_barnaclehive_healthmultiplier", net.ReadFloat())
+	end
+end)
+
+net.Receive("sfad_barnaclehive_minsizemultiplier", function(len,ply)
+	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
+		RunConsoleCommand("sfad_barnaclehive_minsizemultiplier", net.ReadFloat())
+	end
+end)
+
+net.Receive("sfad_barnaclehive_maxsizemultiplier", function(len,ply)
+	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
+		RunConsoleCommand("sfad_barnaclehive_maxsizemultiplier", net.ReadFloat())
+	end
+end)
+
+net.Receive("sfad_barnaclehive_sizemultipliesdmghp", function(len,ply)
+	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
+		RunConsoleCommand("sfad_barnaclehive_sizemultipliesdmghp", net.ReadInt())
+	end
+end)
+
+net.Receive("sfad_barnaclehive_disablemeleeinstakill", function(len,ply)
+	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
+		RunConsoleCommand("sfad_barnaclehive_disablemeleeinstakill", net.ReadInt())
+	end
+end)
+
 	net.Receive("SFAD_BARNACLEHIVE_RESET_BUTTON", function(Len,ply)
 	if ply:IsValid() and ply:IsPlayer() and ply:IsSuperAdmin() then
 		RunConsoleCommand("sfad_barnaclehive_minspreaddistance", "48")
 		RunConsoleCommand("sfad_barnaclehive_maxspreaddistance", "96")
 		RunConsoleCommand("sfad_barnaclehive_maxzoffset", "64")
-		RunConsoleCommand("sfad_barnaclehive_randomly_ignored_chance", "0.5")
-		RunConsoleCommand("sfad_barnaclehive_spread_chance", "0.2")
+		RunConsoleCommand("sfad_barnaclehive_randomly_ignored_chance", "0.75")
+		RunConsoleCommand("sfad_barnaclehive_spread_chance", "0.325")
 		RunConsoleCommand("sfad_barnaclehive_social_distance", "48")
 		RunConsoleCommand("sfad_barnaclehive_spreadtimerlength", "5")
 		RunConsoleCommand("sfad_barnaclehive_barnaclelimit", "300")
 		RunConsoleCommand("sfad_barnaclehive_disablegibs", "1")
 		RunConsoleCommand("sfad_barnaclehive_killcorpsetimer", "15")
+		RunConsoleCommand("sfad_barnaclehive_fancydeath", "1")
+		RunConsoleCommand("sfad_barnaclehive_eatplayer", "1")
+		RunConsoleCommand("sfad_barnaclehive_damagemultiplier", "1")
+		RunConsoleCommand("sfad_barnaclehive_healthmultiplier", "1")
+		//RunConsoleCommand("sfad_barnaclehive_minsizemultiplier", "0.9")
+		//RunConsoleCommand("sfad_barnaclehive_maxsizemultiplier", "1.1")
+		//RunConsoleCommand("sfad_barnaclehive_sizemultipliesdmghp", "1")
+		RunConsoleCommand("sfad_barnaclehive_disablemeleeinstakill", "1")
 	end
 end)
 
@@ -135,11 +222,22 @@ util.AddNetworkString("sfad_barnaclehive_randomly_ignored_chance");
 util.AddNetworkString("sfad_barnaclehive_spread_chance");
 util.AddNetworkString("sfad_barnaclehive_social_distance");
 util.AddNetworkString("sfad_barnaclehive_spreadtimerlength");
-util.AddNetworkString("sfad_barnaclehive_barnaclelimit")
-util.AddNetworkString("sfad_barnaclehive_barnaclespreadenabled")
-util.AddNetworkString("sfad_barnaclehive_disablegibs")
-util.AddNetworkString("sfad_barnaclehive_killcorpsetimer")
-util.AddNetworkString("SFAD_BARNACLEHIVE_RESET_BUTTON")
+util.AddNetworkString("sfad_barnaclehive_barnaclelimit");
+util.AddNetworkString("sfad_barnaclehive_barnaclespreadenabled");
+util.AddNetworkString("sfad_barnaclehive_disablegibs");
+util.AddNetworkString("sfad_barnaclehive_killcorpsetimer");
+util.AddNetworkString("sfad_barnaclehive_fancydeath");
+util.AddNetworkString("sfad_barnaclehive_eatplayer");
+util.AddNetworkString("sfad_barnaclehive_damagemultiplier");
+util.AddNetworkString("sfad_barnaclehive_healthmultiplier");
+util.AddNetworkString("sfad_barnaclehive_minsizemultiplier");
+util.AddNetworkString("sfad_barnaclehive_maxsizemultiplier");
+util.AddNetworkString("sfad_barnaclehive_sizemultipliesdmghp");
+util.AddNetworkString("sfad_barnaclehive_disablemeleeinstakill");
+util.AddNetworkString("SFAD_BARNACLEHIVE_RESET_BUTTON");
+
+//sf_barnaclehive_existingbarnacleslist = {};	
+//someday...actually today...maybe later
 
 local function sf_barnaclehive_rectanglecollisioncheck(p1,sl)
 	local sf_barnaclehive_c = {p1 + Vector(0,sl,0),
@@ -197,6 +295,7 @@ local function sf_barnaclehive_main_spread(ent)
 				local sf_barnaclehivedaddy_babyincoming = ents.Create("npc_barnacle");
 				if (IsValid(sf_barnaclehivedaddy_babyincoming)) then
 					sf_barnaclehivedaddy_babyincoming:SetPos(sf_barnaclehive_babydropoffdestination + Vector(0,0,-1.5));
+					sf_barnaclehivedaddy_babyincoming:SetAngles(Angle(0,math.random(360),0));
 					sf_barnaclehivedaddy_babyincoming:Spawn();
 					sf_barnaclehivedaddy_babyincoming:Activate();
 				end
@@ -255,7 +354,11 @@ local function sf_barnaclebodyremoval_hookfunc(npc,attacker,inflictor)
 		//print("Does this get called?");
 		local sf_barnaclehive_bodytimer = GetConVar("sfad_barnaclehive_killcorpsetimer"):GetFloat();
 		if (sf_barnaclehive_bodytimer >= 0) then
-			SafeRemoveEntityDelayed(npc,sf_barnaclehive_bodytimer);
+			if (GetConVar("sfad_barnaclehive_fancydeath"):GetInt()==1) then
+				timer.Simple(sf_barnaclehive_bodytimer,function() if (npc:IsValid()) then npc:SetName("sf_youdienowbrotha") local sf_ohsnapdie = ents.Create("env_entity_dissolver") sf_ohsnapdie:Spawn() sf_ohsnapdie:Fire("Dissolve","sf_youdienowbrotha") SafeRemoveEntityDelayed(sf_ohsnapdie,0.01) end end)
+			else
+				SafeRemoveEntityDelayed(npc,sf_barnaclehive_bodytimer);
+			end
 		end
 	end
 end
@@ -263,15 +366,53 @@ end
 hook.Add("OnNPCKilled","sf_annihilatedeadbarnaclebodies_prettyplease_hook",sf_barnaclebodyremoval_hookfunc);
 
 
-//sadly you can't disable gibs completely (without some ridiculous checks), but they're halved at least. 
+//sadly you can't disable gibs completely (without some ridiculous workarounds), but they're halved at least. 
 local function sf_barnaclecreated_gibremovalfunc(ent)
-	if (ent:GetClass()=="npc_barnacle") and (GetConVar("sfad_barnaclehive_disablegibs"):GetInt())then
-		local sf_barnaclehive_ogspawnflags = ent:GetInternalVariable("spawnflags");
-		if (bit.band(sf_barnaclehive_ogspawnflags) != 65536) then
-			//ent:SetKeyValue("spawnflags",sf_barnaclehive_ogspawnflags + 65536);
-			timer.Simple(0,function() ent:SetKeyValue("spawnflags",sf_barnaclehive_ogspawnflags + 65536) end)
+	if (ent:GetClass()=="npc_barnacle") then
+		if (GetConVar("sfad_barnaclehive_disablegibs"):GetInt()==1) then
+			local sf_barnaclehive_ogspawnflags = ent:GetInternalVariable("spawnflags");
+			if (bit.band(sf_barnaclehive_ogspawnflags) != 65536) then
+				//ent:SetKeyValue("spawnflags",sf_barnaclehive_ogspawnflags + 65536);
+				timer.Simple(0,function() if (ent:IsValid()) then ent:SetKeyValue("spawnflags",sf_barnaclehive_ogspawnflags + 65536) end end)
+			end
 		end
+		//local sf_barnaclehive_yeahletsgetthatsize = math.random(GetConVar("sfad_barnaclehive_minsizemultiplier"):GetFloat(),GetConVar("sfad_barnaclehive_maxsizemultiplier"):GetFloat())
+		//ent:SetModelScale(ent:GetModelScale()*sf_barnaclehive_yeahletsgetthatsize,1);
+		timer.Simple(0,function() if (ent:IsValid()) then ent:SetHealth(ent:GetMaxHealth() * GetConVar("sfad_barnaclehive_healthmultiplier"):GetFloat()) end end);
+		//ent:SetHealth(ent:GetMaxHealth());
 	end
 end
 
 hook.Add("OnEntityCreated","sf_barnaclecreated_gibremoval_prettyplease_hook",sf_barnaclecreated_gibremovalfunc);
+
+local function sf_barnaclegivesdamage_damagescaleandplayereatingfunc(target,dmg)
+	local sf_barnaclehive_isitbarnacleboy = dmg:GetAttacker();
+	if (IsValid(sf_barnaclehive_isitbarnacleboy)) and (sf_barnaclehive_isitbarnacleboy:GetClass() == "npc_barnacle") then
+		dmg:SetDamage(dmg:GetDamage()*GetConVar("sfad_barnaclehive_damagemultiplier"):GetFloat());
+		if (target:IsPlayer()) and (GetConVar("sfad_barnaclehive_eatplayer"):GetInt()==1) then
+			if (dmg:GetDamage() >= target:Health()) and (!target:HasGodMode()) then
+				//Make the player disappear and spray some blood effects. Too lazy to make this client-sided for the kill feed.
+				local sf_barnaclehive_getvictimpos = target:GetPos();
+				//gamemode.Call("AddDeathNotice","Barnacle",nil,"npc_barnacle",target:GetName(),target:Team());
+				target:KillSilent();
+				local sf_barnaclehive_blood_effectstemp = EffectData();
+				sf_barnaclehive_blood_effectstemp:SetOrigin(sf_barnaclehive_getvictimpos + Vector(0,0,4));
+				sf_barnaclehive_blood_effectstemp:SetFlags(4);
+				sf_barnaclehive_blood_effectstemp:SetColor(0);
+				sf_barnaclehive_blood_effectstemp:SetScale(6);
+				util.Effect("bloodspray",sf_barnaclehive_blood_effectstemp);
+				//Want to remove the effectdata object out of paranoia but I'm sure it's garbage collected, haha. 
+			end
+		end
+	elseif (target:GetClass() == "npc_barnacle") then
+		if (dmg:GetDamageType() == DMG_CLUB) then
+			if (GetConVar("sfad_barnaclehive_disablemeleeinstakill"):GetInt() == 1) then
+				dmg:SetDamageType(DMG_GENERIC);
+			end
+		end
+		
+	end
+
+end
+
+hook.Add("EntityTakeDamage","sf_barnacledoesdamage_eatinganddamagescale_prettyplease_hook",sf_barnaclegivesdamage_damagescaleandplayereatingfunc);
